@@ -49,7 +49,11 @@ cd  compose
 docker-compose up -d
 
 ```
-
+If you want destroy it
+```
+docker-compose stop
+docker-compose rm -f
+```
 You also should login mysql  `docker exec -it sentry /bin/bash`
 ```       
  grant all  on *.* to mysql@'%' identified by 'mysql';
