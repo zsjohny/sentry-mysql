@@ -22,7 +22,7 @@ mysql:
 #flush privileges;
 
 sentry:
-  image: mysql-sentry
+  image: zsjohny/sentry-mysql:latest
   container_name: sentry
   ports:
     - "9000:9000"
@@ -36,7 +36,7 @@ sentry:
 
 sentry_celery_worker:
   command: celery worker -l info
-  image: mysql-sentry
+  image: zsjohny/sentry-mysql:latest
   container_name: sentry_celery_worker
   env_file: ./env.conf
   environment:
@@ -50,7 +50,7 @@ sentry_celery_worker:
 
 sentry_celery_worker_beat:
   command: celery worker -B -l info
-  image: mysql-sentry
+  image: zsjohny/sentry-mysql:latest
   container_name: sentry_celery_worker_beat
   env_file: ./env.conf
   environment:
