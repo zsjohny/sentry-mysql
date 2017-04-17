@@ -41,8 +41,8 @@ is mapped to your docker host) and login with default credentials
 Your sqlite database file and gunicorn logs are available in ``/tmp/sentry`` directory.
 
 
-## Docker compose 
-
+## Docker compose
+It soleve "Background workers haven't checked in recently. This can mean an issue with your configuration or a serious backlog in tasks."
 ```
 cd  compose
 docker-compose up -d
