@@ -61,13 +61,13 @@ You also should login mysql  `docker exec -it sentry /bin/bash`
 ## Contributing
 
 Try not to fork this repo just to create your own Docker image with some
-minor tweak. Please open an [issue on GitHub](https://github.com/zsjohny/sentry-mysql-docker/issues)
+minor tweak. Please open an [issue on GitHub](https://github.com/zsjohny/sentry-mysql/issues)
 and maybe we can include your use case directly within this image :).
 
 You can even write a test case for your feature ;). See
-[CONTRIBUTING.md](https://github.com/zsjohny/sentry-mysql-docker/blob/master/CONTRIBUTING.md).
+[CONTRIBUTING.md](https://github.com/zsjohny/sentry-mysql/blob/master/CONTRIBUTING.md).
 
-Also feel free to give [feedback and comments](https://github.com/zsjohny/sentry-mysql-docker/issues)
+Also feel free to give [feedback and comments](https://github.com/zsjohny/sentry-mysql/issues)
 about this image in general.
 
 ## Advanced usage
