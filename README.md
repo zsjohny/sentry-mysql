@@ -21,7 +21,6 @@ Latest changes introduced some new build tags:
 if you want to keep your builds same as before update your Dockerfiles and change
 ```FROM sdocker pull zsjohny/sentry-mysql``` to ```FROM docker pull zsjohny/sentry-mysql:6.4```.
 
-[![Requirements Status](https://requires.io/github/zsjohny/sentry-mysql-docker/requirements.png?branch=master)](https://requires.io/github/zsjohny/sentry-mysql-docker/requirements/?branch=master)
 
 This is my approach for running [Sentry](https://getsentry.com) inside [Docker](https://docker.com/).
 Almost everything here is configurable via environment variables (including DATABASES and CACHES settings).
