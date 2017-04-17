@@ -5,4 +5,5 @@ environment.example
 environment.nodocker.example
 tests/
 run_tests.sh
+.idea/*
 
