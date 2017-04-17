@@ -1,6 +1,6 @@
 FROM python:2.7
 
-MAINTAINER Sławek Ehlert <slafs@op.pl>
+MAINTAINER Johny Zheng <zs.johny@163.com>
 
 RUN apt-get -qq update && apt-get install -y -q netcat
 
