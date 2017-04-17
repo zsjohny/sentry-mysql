@@ -4,8 +4,6 @@ MAINTAINER Johny Zheng <zhengshun@kuick.cn>
 
 RUN pip install -U wheel pip setuptools
 
-RUN pip install mysql-python
-
 RUN apt-get -qq update && DEBIAN_FRONTEND=noninteractive apt-get install -y -q libxslt1-dev libxml2-dev libpq-dev libldap2-dev libsasl2-dev libssl-dev
 
 RUN mkdir -p /conf /data /wheels
