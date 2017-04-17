@@ -18,7 +18,7 @@ Latest changes introduced some new build tags:
 * **dev** - current master on github (infrequent builds)
 * **latest** (the default one used earlier) - is now the same as **8.0**
 
-if you want to keep your builds same as before update your Dockerfiles and change
+If you want to keep your builds same as before update your Dockerfiles and change
 ```FROM sdocker pull zsjohny/sentry-mysql``` to ```FROM docker pull zsjohny/sentry-mysql:6.4```.
 
 
@@ -41,8 +41,8 @@ is mapped to your docker host) and login with default credentials
 Your sqlite database file and gunicorn logs are available in ``/tmp/sentry`` directory.
 
 
-## Docker compose 
-
+## Docker compose
+It soleve "Background workers haven't checked in recently. This can mean an issue with your configuration or a serious backlog in tasks."
 ```
 cd  compose
 docker-compose up -d
