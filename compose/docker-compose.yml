@@ -1,0 +1,63 @@
+redis:
+  image: redis:latest
+  command: redis-server --appendonly yes
+  container_name: redis
+
+#postgres:
+#  image: postgres
+#  container_name: postgres
+
+mysql:
+  image: mysql
+  container_name: mysql
+  ports:
+    - "3306:3306"
+  environment:
+    MYSQL_DATABASE: mysql
+    MYSQL_USER: mysql
+    DATABASE_PASSWORD: mysql
+    MYSQL_ROOT_PASSWORD: mysql
+
+#grant all  on *.* to mysql@'%' identified by 'mysql';
+#flush privileges;
+
+sentry:
+  image: mysql-sentry
+  container_name: sentry
+  ports:
+    - "9000:9000"
+  env_file: ./env.conf
+  volumes:
+    - /tmp/sentry:/data
+  links:
+    - redis
+#    - postgres
+    - mysql
+
+sentry_celery_worker:
+  command: celery worker -l info
+  image: mysql-sentry
+  container_name: sentry_celery_worker
+  env_file: ./env.conf
+  environment:
+    C_FORCE_ROOT: 1
+  volumes:
+    - /tmp/sentry:/data
+  links:
+    - redis
+#    - postgres
+    - mysql
+
+sentry_celery_worker_beat:
+  command: celery worker -B -l info
+  image: mysql-sentry
+  container_name: sentry_celery_worker_beat
+  env_file: ./env.conf
+  environment:
+    C_FORCE_ROOT: 1
+  volumes:
+    - /tmp/sentry:/data
+  links:
+    - redis
+#    - postgres
+    - mysql
