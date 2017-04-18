@@ -5,8 +5,7 @@ Sentry in Docker
 
 Latest changes introduced some new build tags:
 
-* **8.0**  - current stable version (8.0.X)
-* **7.7**  - old stable version (7.7.4) - no longer updated
+* **7.7**  - current stable version (7.7.X)
 * **7.6**  - old stable version (7.6.2) - no longer updated
 * **7.5**  - old stable version (7.5.6) - no longer updated
 * **7.4**  - old stable version (7.4.3) - no longer updated
@@ -16,7 +15,7 @@ Latest changes introduced some new build tags:
 * **7.0**  - older stable version (7.0.2) - no longer updated
 * **6.4** - even older stable version (6.4.4) - no longer updated
 * **dev** - current master on github (infrequent builds)
-* **latest** (the default one used earlier) - is now the same as **8.0**
+* **latest** (the default one used earlier) - is now the same as **7.7**
 
 If you want to keep your builds same as before update your Dockerfiles and change
 ```FROM sdocker pull zsjohny/sentry-mysql``` to ```FROM docker pull zsjohny/sentry-mysql:6.4```.
@@ -40,34 +39,16 @@ is mapped to your docker host) and login with default credentials
 
 Your sqlite database file and gunicorn logs are available in ``/tmp/sentry`` directory.
 
-
-## Docker compose
-It soleve "Background workers haven't checked in recently. This can mean an issue with your configuration or a serious backlog in tasks."
-```
-cd  compose
-docker-compose up -d
-
-```
-If you want destroy it
-```
-docker-compose stop
-docker-compose rm -f
-```
-You also should login mysql  `docker exec -it sentry /bin/bash`
-```       
- grant all  on *.* to mysql@'%' identified by 'mysql';
- flush privileges;
-```
 ## Contributing
 
 Try not to fork this repo just to create your own Docker image with some
-minor tweak. Please open an [issue on GitHub](https://github.com/zsjohny/sentry-mysql/issues)
+minor tweak. Please open an [issue on GitHub](https://github.com/slafs/sentry-docker/issues)
 and maybe we can include your use case directly within this image :).
 
 You can even write a test case for your feature ;). See
-[CONTRIBUTING.md](https://github.com/zsjohny/sentry-mysql/blob/master/CONTRIBUTING.md).
+[CONTRIBUTING.md](https://github.com/slafs/sentry-docker/blob/master/CONTRIBUTING.md).
 
-Also feel free to give [feedback and comments](https://github.com/zsjohny/sentry-mysql/issues)
+Also feel free to give [feedback and comments](https://github.com/slafs/sentry-docker/issues)
 about this image in general.
 
 ## Advanced usage
@@ -76,7 +57,7 @@ Copy the file with environment variables ``environment.example`` e.g ``cp enviro
 and after tweaking some values run sentry like this
 
 ```
-docker run -d --name=sentry --volume=/tmp/sentry:/data -p 80:9000 --env-file=environment zsjohny/sentry-mysql
+docker run -d --name=sentry --volume=/tmp/sentry:/data -p 80:9000 --env-file=environment slafs/sentry
 ```
 
 ``ENTRYPOINT`` for this image is a little wrapper script around default ``sentry`` executable.
@@ -86,7 +67,7 @@ and creates a default administrator (superuser) and then runs a http service (as
 All commands and args are passed to the ``sentry`` executable. This means
 
 ```
-docker run [docker options] zsjohny/sentry-mysql --help
+docker run [docker options] slafs/sentry --help
 ```
 
 refers to running:
@@ -122,26 +103,11 @@ To link your sentry instance with a postgres container you can do it like this:
 1. Run postgres container (from the official Docker image): ``docker run -d --name=postgres_container postgres``.
 2. Add ``DATABASE_URL=postgres://postgres:@postgresdb/postgres`` to environment file.
 3. Run sentry with linked postgres container: ```
-docker run -d --name=sentry --volume=/tmp/sentry:/data -p 80:9000 --env-file=environment --link=postgres_container:postgresdb zsjohny/sentry-mysql```
+docker run -d --name=sentry --volume=/tmp/sentry:/data -p 80:9000 --env-file=environment --link=postgres_container:postgresdb slafs/sentry```
 
 Notice that an alias for your linked postgres container (``postgresdb``) is the same as a postgres host in ``DATABASE_URL`` variable.
 
 ``DATABASE_URL`` is a value that is parsed by an external app called [dj-database-url](https://github.com/kennethreitz/dj-database-url).
-
-
-### Mysql
-
-It is recommended to run your sentry instance with Mysql database.
-To link your sentry instance with a mysql container you can do it like this:
-
-0. Pull an official Mysql image: ``docker pull mysql`` (if you haven't already).
-1. Run mysqlcontainer (from the official Docker image): ``docker run -d --name=mysql_container mysql``.
-2. Add ``DATABASE_URL=mysql://mysql:mysql@mysql:3306/mysql`` to environment file.
-3. Run sentry with linked mysql container: ```
-docker run -d --name=sentry --volume=/tmp/sentry:/data -p 80:9000 --env-file=environment --link=mysql_container:mysqldb zsjohny/sentry-mysql```
-4. 
-        grant all  on *.* to mysql@'%' identified by 'mysql';
-        flush privileges;
 
 
 ### Redis
@@ -157,7 +123,7 @@ You can link your sentry instance with a redis container like this:
 0. Pull an official Redis image: ``docker pull redis`` (if you haven't already).
 1. Run redis container (from the official Docker image): ``docker run -d --name=redis_container redis``
 2. ```
-docker run -d --name=sentry --volume=/tmp/sentry:/data -p 80:9000 --env-file=environment --link=postgres_container:postgresdb --link=redis_container:redis zsjohny/sentry-mysql```
+docker run -d --name=sentry --volume=/tmp/sentry:/data -p 80:9000 --env-file=environment --link=postgres_container:postgresdb --link=redis_container:redis slafs/sentry```
 
 If you want to use a different container alias for redis you should add ```SENTRY_REDIS_HOST=your_redis_alias``` to environment file.
 
@@ -184,7 +150,7 @@ See [sentry docs](https://docs.getsentry.com/on-premise/server/buffer/#redis) fo
 To use Celery in sentry you must add ``CELERY_ALWAYS_EAGER=False`` to your environment file and run a celery worker like this:
 
 ```
-docker run -d --name=sentry_celery_worker --link=redis_container:redis --link=postgres_container:postgresdb --volume=/tmp/sentry:/data --env-file=environment zsjohny/sentry-mysql celery worker -B
+docker run -d --name=sentry_celery_worker --link=redis_container:redis --link=postgres_container:postgresdb --volume=/tmp/sentry:/data --env-file=environment slafs/sentry celery worker -B
 ```
 
 You can also set a different ``BROKER_URL`` via environment file by adding this:
@@ -344,7 +310,7 @@ config script ``my_custom_settings.py``:
 and a ``Dockerfile`` similar to this:
 
     # inherit from this image
-    FROM zsjohny/sentry-mysql
+    FROM slafs/sentry
 
     # who's the boss? :)
     MAINTAINER me
@@ -374,7 +340,7 @@ Now you can run your sentry instance just like before but with different image.
 So for example this:
 
 ```
-docker run -d --name=... --volume=... -p 80:9000 -e SECRET_KEY=... -e SENTRY_URL_PREFIX=http://... zsjohny/sentry-mysql
+docker run -d --name=... --volume=... -p 80:9000 -e SECRET_KEY=... -e SENTRY_URL_PREFIX=http://... slafs/sentry
 ```
 
 becomes this:
@@ -392,7 +358,7 @@ you can also create your own image for this.
 Following ``Dockerfile`` should be OK::
 
     # inherit from this image
-    FROM zsjohny/sentry-mysql
+    FROM slafs/sentry
 
     # who's the boss? :)
     MAINTAINER me
