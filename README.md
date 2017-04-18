@@ -5,8 +5,7 @@ Sentry in Docker
 
 Latest changes introduced some new build tags:
 
-* **8.0**  - current stable version (8.0.X)
-* **7.7**  - old stable version (7.7.4) - no longer updated
+* **7.7**  - current stable version (7.7.X)
 * **7.6**  - old stable version (7.6.2) - no longer updated
 * **7.5**  - old stable version (7.5.6) - no longer updated
 * **7.4**  - old stable version (7.4.3) - no longer updated
@@ -16,7 +15,7 @@ Latest changes introduced some new build tags:
 * **7.0**  - older stable version (7.0.2) - no longer updated
 * **6.4** - even older stable version (6.4.4) - no longer updated
 * **dev** - current master on github (infrequent builds)
-* **latest** (the default one used earlier) - is now the same as **8.0**
+* **latest** (the default one used earlier) - is now the same as **7.7**
 
 If you want to keep your builds same as before update your Dockerfiles and change
 ```FROM sdocker pull zsjohny/sentry-mysql``` to ```FROM docker pull zsjohny/sentry-mysql:6.4```.
@@ -170,14 +169,14 @@ See [django-cache-url](https://github.com/ghickman/django-cache-url) docs for av
 
 #### Sentry buffers with redis
 
-To use [sentry update buffers](https://docs.getsentry.com/on-premise/server/buffer/)
+To use [sentry update buffers](http://sentry.readthedocs.org/en/latest/buffer/)
 with redis you must add ``SENTRY_USE_REDIS_BUFFERS=True`` to environment file.
 
 If you have many redis containers/hosts you can set a list of those hosts
 in ``SENTRY_REDIS_BUFFERS`` variable so they can be used by sentry.
 Like this: ``SENTRY_REDIS_BUFFERS=redis1:6380,redis2:6381``.
 
-See [sentry docs](https://docs.getsentry.com/on-premise/server/buffer/#redis) for details about redis buffer.
+See [sentry docs](http://sentry.readthedocs.org/en/latest/buffer/#the-redis-backend) for details about redis buffer.
 
 #### Celery with redis (and postgres)
 
@@ -212,7 +211,7 @@ of Redis servers: ``SENTRY_REDIS_TSDBS=redis1:6379,redis2:6380``
 
 ### Email
 
-You can configure all [email settings](https://docs.getsentry.com/on-premise/server/config/#smtp-server)
+You can configure all [email settings](http://sentry.readthedocs.org/en/latest/quickstart/index.html#configure-outbound-mail)
 by environment variables with ``SENTRY_`` prefix.
 You have to also change an email backend and set it
 to ``SENTRY_EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend`` or something similar.
@@ -230,7 +229,7 @@ See the ``AUTH_REMOTE_USER_*`` env variables below for further configuration.
 
 ## Available environment variables
 
-Refer to [sentry documentation](https://docs.getsentry.com/on-premise/server/config/),
+Refer to [sentry documentation](http://sentry.readthedocs.org/en/latest/config/index.html),
 [django documentation](https://docs.djangoproject.com/en/1.6/ref/settings/),
 [celery documentation](http://docs.celeryproject.org/en/latest/)
 and [django-auth-ldap documentation](https://pythonhosted.org/django-auth-ldap/reference.html)
@@ -252,7 +251,7 @@ SENTRY_REDIS_PORT               |                                               
 SENTRY_WEB_HOST                 | SENTRY_WEB_HOST                               |      | 0.0.0.0                                               |
 SENTRY_WEB_PORT                 | SENTRY_WEB_PORT                               | int  | 9000                                                  |
 SENTRY_WORKERS                  | SENTRY_WEB_OPTIONS['workers']                 | int  | 3                                                     | the number of gunicorn workers
-SENTRY_USE_REDIS_BUFFERS        |                                               | bool | False                                                 |
+SENTRY_USE_REDIS_BUFFER         |                                               | bool | False                                                 |
 SENTRY_REDIS_BUFFERS            | SENTRY_REDIS_OPTIONS['hosts']*                | list | ``<SENTRY_REDIS_HOST>:<SENTRY_REDIS_PORT>``           | comma separated list of redis hosts (``host1:port1,host2:port2,...``)
 SENTRY_USE_REDIS_TSDB           |                                               | bool | False                                                 |
 SENTRY_REDIS_TSDBS              | SENTRY_TSDB_OPTIONS['hosts']*                 | list | ``<SENTRY_REDIS_HOST>:<SENTRY_REDIS_PORT>``           | comma separated list of redis hosts (``host1:port1,host2:port2,...``)
