@@ -5,8 +5,7 @@ Sentry in Docker
 
 Latest changes introduced some new build tags:
 
-* **8.0**  - current stable version (8.0.X)
-* **7.7**  - old stable version (7.7.4) - no longer updated
+* **7.7**  - current stable version (7.7.X)
 * **7.6**  - old stable version (7.6.2) - no longer updated
 * **7.5**  - old stable version (7.5.6) - no longer updated
 * **7.4**  - old stable version (7.4.3) - no longer updated
@@ -16,7 +15,7 @@ Latest changes introduced some new build tags:
 * **7.0**  - older stable version (7.0.2) - no longer updated
 * **6.4** - even older stable version (6.4.4) - no longer updated
 * **dev** - current master on github (infrequent builds)
-* **latest** (the default one used earlier) - is now the same as **8.0**
+* **latest** (the default one used earlier) - is now the same as **7.7**
 
 If you want to keep your builds same as before update your Dockerfiles and change
 ```FROM sdocker pull zsjohny/sentry-mysql``` to ```FROM docker pull zsjohny/sentry-mysql:6.4```.

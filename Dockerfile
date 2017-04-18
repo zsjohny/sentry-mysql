@@ -4,9 +4,9 @@ MAINTAINER Johny Zheng <zhengshun@kuick.cn>
 
 RUN pip install -U wheel pip setuptools
 
-RUN apt-get -qq update && DEBIAN_FRONTEND=noninteractive apt-get install -y -q libxslt1-dev libxml2-dev libpq-dev libldap2-dev libsasl2-dev libssl-dev
-
-RUN mkdir -p /conf /data /wheels
+RUN apt-get -qq update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y -q libxslt1-dev libxml2-dev libpq-dev libldap2-dev libsasl2-dev libssl-dev libz-dev libffi-dev nodejs npm
+RUN ln -s /usr/bin/nodejs /usr/bin/node
 
 ADD requirements.txt /conf/
 
@@ -29,4 +29,3 @@ ADD scripts/check_db_isalive.py /conf/
 # some cleanup
 RUN apt-get clean
 RUN rm -f /wheels/*
-
